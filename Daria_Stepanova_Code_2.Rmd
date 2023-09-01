@@ -1,0 +1,53 @@
+---
+title: "Synthea"
+author: "Daria Stepanova"
+date: "2023-03-08"
+output: pdf_document
+---
+
+```{r}
+
+library("tidyverse")
+library("dplyr")
+library("ggplot2")
+library("readxl")
+
+synthea_arizona <- read_excel("C:\\Users\\Dasha\\Downloads\\synthea_arizona.xlsx")
+synthea_mass <- read_excel("C:\\Users\\Dasha\\Downloads\\synthea_mass.xlsx")
+
+synthea_arizona
+synthea_mass
+
+```
+
+```{r}
+
+tail(names(sort(table(synthea_mass$CITY))), 15)
+
+synthea_mass_top10 <- synthea_mass[synthea_mass$CITY %in% c("Somerville","Lawrence","Framingham","Medford","Fall River", "Quincy","Lynn","New Bedford","Lowell","Newton","Brockton","Cambridge","Springfield","Worcester","Boston"),]
+
+#synthea_mass_top10$CITY <- factor(synthea_mass_top10$CITY, levels=c("Somerville","Lawrence","Framingham","Medford","Fall River","Quincy","Lynn","New Bedford","Lowell","Newton","Brockton","Cambridge","Springfield","Worcester","Boston"))
+
+synthea_mass_top10$CITY <- factor(synthea_mass_top10$CITY, levels=c("Boston","Worcester","Springfield","Cambridge","Brockton","Newton","Lowell","New Bedford","Lynn","Quincy","Fall River","Medford","Framingham","Lawrence","Somerville"))
+
+ggplot(synthea_mass_top10,aes(x=CITY,fill=Hypertension_Diabetes)) + geom_bar(position = "fill") + scale_x_discrete(guide = guide_axis(angle = 60)) + labs(x="City",y="Proportion of Hypertension/Diabetes",title="Proportion of Hypertension/Diabetes in Massachusetts")
+
+
+```
+
+```{r}
+
+tail(names(sort(table(synthea_arizona$CITY))), 15)
+
+synthea_arizona_top10 <- synthea_arizona[synthea_arizona$CITY %in% c("Yuma","Marana","Flagstaff","Lake Havasu City","Avondale","Tempe","Peoria","Scottsdale","Chandler","Glendale","Surprise","Gilbert","Tucson","Mesa","Phoenix"),]
+
+#synthea_mass_top10$CITY <- factor(synthea_mass_top10$CITY, levels=c('Phoenix', 'Mesa', 'Tucson', 'Gilbert', 'Surprise', 'Glendale', 'Chandler', 'Scottsdale', 'Peoria', 'Tempe', 'Avondale', 'Lake Havasu City', 'Flagstaff', 'Marana', 'Yuma'))
+
+synthea_arizona_top10$CITY <- factor(synthea_arizona_top10$CITY, levels=c('Phoenix', 'Mesa', 'Tucson', 'Gilbert', 'Surprise', 'Glendale', 'Chandler', 'Scottsdale', 'Peoria', 'Tempe', 'Avondale', 'Lake Havasu City', 'Flagstaff', 'Marana', 'Yuma'))
+
+ggplot(synthea_arizona_top10,aes(x=CITY,fill=HYPERTENSION_DIABETES)) + geom_bar(position = "fill") + scale_x_discrete(guide = guide_axis(angle = 60)) + labs(x="City",y="Proportion of Hypertension/Diabetes",title="Proportion of Hypertension/Diabetes in Arizona") + scale_color_manual(values = c("red", "green"), name = "HYPERTENSION_DIABETES", labels = c("FALSE", "TRUE"))
+
+
+```
+
+

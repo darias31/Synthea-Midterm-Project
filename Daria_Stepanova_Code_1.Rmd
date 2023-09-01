@@ -1,0 +1,38 @@
+```{r}
+
+library(ggplot2)
+library(tidyverse)
+library(dplyr)
+library(readxl)
+library(writexl)
+
+conditions <- read.csv("C:\\Users\\Dasha\\Downloads\\conditions.csv")
+patients <- read.csv("C:\\Users\\Dasha\\Downloads\\patients.csv")
+
+colnames(patients)[colnames(patients) == "Id"] ="PATIENT"
+
+synthea = full_join(patients,conditions,by="PATIENT")
+
+#synthea
+
+#write_xlsx(synthea,"C:\\Users\\Dasha\\Downloads\\synthea.xlsx")
+
+
+```
+```{r}
+
+patients = read.csv("C:\\Users\\Dasha\\Downloads\\patients.csv")
+arizonahypertension = read_excel("C:\\Users\\Dasha\\Downloads\\arizonahypertension.xlsx")
+
+colnames(patients)[colnames(patients) == "Id"] ="PATIENT"
+
+synthea_arizona = full_join(arizonahypertension,patients,by="PATIENT")
+synthea_arizona[is.na(synthea_arizona)] <- FALSE
+
+#synthea_arizona
+
+write_xlsx(synthea_arizona,"C:\\Users\\Dasha\\Downloads\\synthea_arizona.xlsx")
+
+```
+
+
